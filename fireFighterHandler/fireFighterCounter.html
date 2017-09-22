@@ -1,0 +1,27 @@
+<div style="border: thin solid lightgray; border-radius: 4px; padding: 10px; background: #4276b2; color: white; font-family: sans-serif; font-size: small" >
+<p style="text-align: center">
+Ad account ID: <input type="text" ng-model="$ctrl.adAccountID"></input><button style="margin-right: 10px" ng-click="$ctrl.cleanID()">Clean</button>
+Acess token: <input type="text" ng-model="$ctrl.accessToken"></input><button style="margin-right: 10px" ng-click="$ctrl.cleanToken()">Clean</button>
+<button style="margin-left: 10px" ng-click="$ctrl.startSearch()">Start search</button>
+</p>
+</div>
+
+<div id="interface" style="border: thin solid lightgray; border-radius: 4px; margin-top: 10px; padding: 10px; visibility: hidden; font-family: sans-serif;  font-size: small">
+<!--Country: <input type="text" id="country" ng-model="$ctrl.countryName"></input></br>-->
+Country: <input list="countries" ng-model="$ctrl.countryName" style="margin: 10px"></input>
+<datalist id="countries">
+<option ng-repeat="c in $ctrl.countryList" value="{{c['name']}}">
+</datalist></br>
+Min age: <input type="text" ng-model="$ctrl.minAge" style="margin: 10px"></input>
+Max age: <input type="text" ng-model="$ctrl.maxAge" style="margin: 10px"></input></br>
+Gender:
+<select ng-model="$ctrl.gender" style="margin: 10px">
+<option value="1">male</option>
+<option value="2">feemale</option>
+<option value="0">both</option>
+</select></br>
+<button ng-click="$ctrl.countryHandler()" style="margin-top: 20px">Search Firefighters!</button>
+
+<p id="FFCounter" style="text-align: center; font-size: medium; color: #4276b2"></p>
+
+</div>
