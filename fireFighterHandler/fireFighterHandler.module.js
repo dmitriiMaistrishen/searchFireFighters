@@ -1,3 +1,3 @@
 'use strict'
 
-angular.module('fireFighterHandler', []);
+angular.module('fireFighterHandler', ['ngAnimate']);

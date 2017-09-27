@@ -2,11 +2,12 @@
 
 angular.module('fireFighterHandler').component('fireFighterCounter',{
 	templateUrl: 'fireFighterHandler/fireFighterCounter.html',
-	controller: function FireFighterCounterController(){
+	controller: function FireFighterCounterController($scope){
 		var self = this;
 		this.counter = 0; 
 		this.professions = [];
 		this.countryList = [];
+		this.interfaceIsVisible = false;
 		
 		this.adAccountID = "";
 		this.cleanID = function(){
@@ -46,20 +47,13 @@ angular.module('fireFighterHandler').component('fireFighterCounter',{
 			FB.api('/search?pretty=0&type=adgeolocation&location_types=["country"]&limit=1000','GET',{'access_token': access_token}, function(response){
 				self.handleError(response);
 				for(var i = 0; i < response['data'].length; i++){
-					//countries.push(response['data'][i]['name']);
 					var bufer = {'name':'', 'country_code':''};
 					bufer['name'] = response['data'][i]['name'];
 					bufer['country_code'] = response['data'][i]['country_code'];
 					countries.push(bufer);
-					
-					//autocompleterContainer.push(response['data'][i]['name']);
 				}
 				self.countryList = countries;
 				
-				//$( "#country" ).autocomplete({
-				//	source: autocompleterContainer,
-					//minLength: 2
-				//});
 			})
 		}
 		
@@ -69,9 +63,7 @@ angular.module('fireFighterHandler').component('fireFighterCounter',{
 			
 			(function checkLists(){
 				if((self.professions)&&(self.countryList)){
-					$('#interface').slideUp(1);
-					$('#interface').css('visibility', 'visible');
-					$('#interface').slideDown('fast');
+					self.interfaceIsVisible = true;
 					return;
 				}
 				else{
@@ -103,8 +95,8 @@ angular.module('fireFighterHandler').component('fireFighterCounter',{
 			
 			FB.api(String(ad_account_id) + '/reachestimate', 'GET', {'targeting_spec': targeting_spec, 'access_token': access_token}, function(response){
 				self.handleError(response);
-				//self.counter = response['data']['users'];	does not work properly. why!?
-				$($('#FFCounter')[0]).text("Firefighters found: " + response['data']['users']);
+				self.counter = response['data']['users'];
+				$scope.$apply();
 			})
 		}
 		
